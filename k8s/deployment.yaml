@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eta-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eta
+  template:
+    metadata:
+      labels:
+        app: eta
+    spec:
+      containers:
+        - name: eta
+          image: eta-playground:dev # локальный образ (для kind load docker-image)
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: config
+              mountPath: /config
+              readOnly: true
+      volumes:
+        - name: config
+          configMap:
+            name: algorithm-config
+            items:
+              - key: algorithm.yaml
+                path: algorithm.yaml
