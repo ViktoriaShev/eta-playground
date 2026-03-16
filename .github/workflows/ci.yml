@@ -1,0 +1,25 @@
+name: CI pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Show project structure
+        run: tree
+
+      - name: Install kubectl
+        uses: azure/setup-kubectl@v4
+
+      - name: Validate k8s configs
+        run: |
+          kubectl apply --dry-run=client -f k8s/
