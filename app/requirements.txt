@@ -1,2 +1,4 @@
 Flask==2.2.5
 PyYAML==6.0
+confluent-kafka==2.4.0
+influxdb-client==1.43.0
