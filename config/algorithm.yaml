@@ -11,7 +11,7 @@ algorithm:
     traffic_adjustment: 0.1 # Условия трафика
   # Коэффициенты погодных условий
   weather:
-    rain_factor: 1.5 # Дождь
+    rain_factor: 2.5 # Дождь
     snow_factor: 1.5 # Снег
   traffic:
     congestion_factor: 1.3 # Загруженность дорог
