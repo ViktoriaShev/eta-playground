@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: influxdb
+spec:
+  selector:
+    app: influxdb
+  ports:
+    - name: http
+      port: 8086
+      targetPort: 8086
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: influxdb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: influxdb
+  template:
+    metadata:
+      labels:
+        app: influxdb
+    spec:
+      containers:
+        - name: influxdb
+          image: influxdb:2.7
+          ports:
+            - containerPort: 8086
+          env:
+            - name: DOCKER_INFLUXDB_INIT_MODE
+              value: setup
+            - name: DOCKER_INFLUXDB_INIT_USERNAME
+              value: admin
+            - name: DOCKER_INFLUXDB_INIT_PASSWORD
+              value: adminadmin
+            - name: DOCKER_INFLUXDB_INIT_ORG
+              value: demo-org
+            - name: DOCKER_INFLUXDB_INIT_BUCKET
+              value: eta-demo
+            - name: DOCKER_INFLUXDB_INIT_ADMIN_TOKEN
+              value: demo-token-demo-token-demo-token

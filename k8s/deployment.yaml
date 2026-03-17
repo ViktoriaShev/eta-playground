@@ -14,9 +14,24 @@ spec:
     spec:
       containers:
         - name: eta
-          image: eta-playground:dev # локальный образ (для kind load docker-image)
+          image: eta-playground:dev # локальный образ (kind load docker-image eta-playground:dev)
           ports:
             - containerPort: 8080
+          env:
+            - name: PORT
+              value: "8080"
+            - name: CONFIG_PATH
+              value: /config/algorithm.yaml
+            - name: KAFKA_BOOTSTRAP
+              value: kafka:9092
+            - name: INFLUX_URL
+              value: http://influxdb:8086
+            - name: INFLUX_TOKEN
+              value: demo-token-demo-token-demo-token
+            - name: INFLUX_ORG
+              value: demo-org
+            - name: INFLUX_BUCKET
+              value: eta-demo
           volumeMounts:
             - name: config
               mountPath: /config
