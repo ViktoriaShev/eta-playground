@@ -7,7 +7,7 @@ from confluent_kafka import Consumer
 
 from config import load_config
 from eta_engine import calculate_eta
-from store import get_train_state, update_event, update_position, update_prediction
+from store import add_message, get_train_state, update_event, update_position, update_prediction
 from tsdb import TsdbClient
 
 KAFKA_BOOTSTRAP = os.getenv('KAFKA_BOOTSTRAP', 'kafka:9092')
@@ -38,10 +38,13 @@ class DemoConsumer(threading.Thread):
 
             payload = json.loads(msg.value().decode('utf-8'))
             train_id = payload['train_id']
-            if msg.topic() == 'metro_positions':
+            topic = msg.topic()
+            add_message(topic, payload)
+
+            if topic == 'metro_positions':
                 update_position(train_id, payload)
                 tsdb.write_position(payload)
-            elif msg.topic() == 'metro_events':
+            elif topic == 'metro_events':
                 update_event(train_id, payload)
 
             state = get_train_state(train_id)

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ETA Playground</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Учебный проект</p>
+        <h1>ETA Playground Dashboard</h1>
+        <p class="subtitle">Демонстрация потока: Kafka → consumer → InfluxDB → расчет ETA → интерфейс</p>
+      </div>
+      <button id="send-demo" class="primary">Отправить демо-данные</button>
+    </header>
+
+    <section class="grid top-grid">
+      <article class="card status-card">
+        <h2>Статус сервиса</h2>
+        <div id="service-status" class="badge">Проверка...</div>
+        <p class="muted">Кнопка выше отправляет тестовые события в Kafka. Страница обновляет состояние автоматически.</p>
+      </article>
+
+      <article class="card">
+        <h2>Конфиг алгоритма</h2>
+        <pre id="config-view">Загрузка...</pre>
+      </article>
+    </section>
+
+    <section>
+      <h2>Текущее состояние поездов</h2>
+      <div id="train-list" class="train-grid"></div>
+    </section>
+
+    <section class="grid bottom-grid">
+      <article class="card">
+        <h2>Последние сообщения из Kafka</h2>
+        <div id="events-list" class="list"></div>
+      </article>
+
+      <article class="card">
+        <h2>Как читать экран</h2>
+        <ol>
+          <li>Нажать <b>«Отправить демо-данные»</b>.</li>
+          <li>Посмотреть, как появляются сообщения в Kafka.</li>
+          <li>Убедиться, что для поездов обновляются позиция, событие и ETA.</li>
+          <li>Сделать вывод, что интерфейс показывает получение данных и итоговый расчет времени прибытия.</li>
+        </ol>
+      </article>
+    </section>
+  </div>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
